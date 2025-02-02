@@ -4,17 +4,22 @@ run-name: GitHub Actions 🚀 is run  ${{github.actor}}
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
     paths:
       - "index.html"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: gh-deployment-workflow
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    permissions:
-      contents: read
-      pull-requests: write
-      issues: write
     environment:
       name: gihub-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -22,10 +27,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: setup pages
+        uses: actions/configure-pages@v5
+      - name: upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
 
       - name: Deploy to GitHub Pages
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: .
+        id: deployment
         uses: actions/deploy-pages@v4
