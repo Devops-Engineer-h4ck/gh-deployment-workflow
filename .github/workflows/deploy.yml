@@ -1,6 +1,6 @@
 name: gh-deployment-workflow
 
-run-name: GitHub Actions 🚀 is run  ${{github.actor}}
+run-name: GitHub Actions 🚀 is run  ${{ github.actor }}
 
 on:
   push:
@@ -21,17 +21,17 @@ concurrency:
 jobs:
   deploy:
     environment:
-      name: github-pages
+      name: github-pages # Se corrigió el typo
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: setup pages
+      - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: upload artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: "."
