@@ -1,0 +1,31 @@
+name: gh-deployment-workflow
+
+run-name: GitHub Actions 🚀 is run  ${{github.actor}}
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    environment:
+      name: gihub-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: .
+        uses: actions/deploy-pages@v4
