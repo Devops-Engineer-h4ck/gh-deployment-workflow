@@ -3,6 +3,8 @@
 ## Project Overview
 This repository contains a GitHub Actions workflow that automates the deployment of a static website to **GitHub Pages**. The workflow is triggered only when changes are made to the `index.html` file.
 
+[GitHub Pages Deployment](https://roadmap.sh/projects/github-actions-deployment-workflow)
+
 ## Solution
 - A **GitHub Actions workflow** is defined in `.github/workflows/deploy.yml`.
 - The workflow triggers on pushes to the `main` branch where `index.html` is modified.
